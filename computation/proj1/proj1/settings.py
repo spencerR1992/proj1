@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'proj1.wsgi.application'
 # }
 PGDB_USERNAME = os.environ.get('PGDB_USERNAME')
 PGDB_PASSWORD = os.environ.get('PGDB_PASSWORD')
-PGDB_HOST = os.environ.get('PGDB_HOST', '0.0.0.0')
+PGDB_HOST = os.environ.get('PGDB_HOST', '172.17.0.2')
 PGDB_PORT = os.environ.get('PGDB_PORT', '5432')
 
 DATABASES = {
