@@ -10,6 +10,8 @@ class Company(models.Model):
 	name = models.CharField(max_length=300)
 	ticker_symbol = models.CharField(max_length=20,unique=True)
 	stock_data = JSONField(null=True,blank=True)
+	industry_id = models.ForeignKey('Industry', null=True)
+	sector_id = models.ForeignKey('Sector', null=True)
 	sector = models.CharField(max_length=200,blank=True,null=True)
 	industry = models.CharField(max_length=200,blank=True,null=True)
 	def __unicode__(self):

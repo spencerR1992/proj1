@@ -25,12 +25,12 @@ def company_info_to_dict():
     nyse = 'nyse.json'
     nasdaq = 'nasdaq.json'
     amex = 'amex.json'
-    myList = [nyse, nasdaq, amex]
+    myList = [(nyse, 'NYSE'), (nasdaq, 'NASDAQ'), (amex, 'AMEX')]
     myDict = {}
     for item in myList:
-        myData = unpack_json_data(item)
+        myData = unpack_json_data(item[0])
         for item in myData:
             myDict[item['Symbol']] = {'name': item['Name'], 'last_sale': item['LastSale'], 'market_cap': item['MarketCap'], 'ipo_year': item[
-                'IPOyear'], 'sector': item['Sector'], 'industry': item['industry'], 'summary_quote': item['Summary Quote']}
+                'IPOyear'], 'sector': item['Sector'], 'industry': item['industry'], 'summary_quote': item['Summary Quote'], 'exchange': item[1]}
 
     return myDict
