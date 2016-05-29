@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'special',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -82,14 +83,14 @@ WSGI_APPLICATION = 'proj1.wsgi.application'
 # }
 PGDB_USERNAME = os.environ.get('PGDB_USERNAME')
 PGDB_PASSWORD = os.environ.get('PGDB_PASSWORD')
-PGDB_HOST = os.environ.get('PGDB_HOST', '172.17.0.2')
+PGDB_HOST = os.environ.get('PGDB_HOST', '192.168.99.100')
 PGDB_PORT = os.environ.get('PGDB_PORT', '5432')
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'compose',
-        'USER': PGDB_USERNAME,
+        'NAME': 'firstdb',
+        'USER': 'postgres',
         'PASSWORD': PGDB_PASSWORD,
         'HOST': PGDB_HOST,
         'PORT': PGDB_PORT,
