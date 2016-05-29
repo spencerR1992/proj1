@@ -49,10 +49,12 @@ def get_companies(company_list_json):
 		myArr.append(item['Symbol'])
 	return Company.objects.get(ticker_symbol__in=myArr)
 
+#takes as input a company object, start date and end_date (as datetime.date)
+#returns an array of daily stock information. 
 def get_company_data(company, start_date, end_date):
 	start_date = "%s,%s,%s" % (start_date.year, start_date.month, start_date.day)
 	end_date = "%s,%s,%s" % (end_date.year, end_date.month, end_date.day)
-	share = Share(company.ticker)
+	share = Share(company.ticker_symbol)
 	return share.get_historical(start_date, end_date)
 
 
