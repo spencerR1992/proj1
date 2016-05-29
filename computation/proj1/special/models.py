@@ -6,5 +6,9 @@ from jsonfield import JSONField
 
 # Create your models here.
 
-
-
+class Company(models.Model):
+	name = models.CharField(max_length=300)
+	ticker_symbol = models.CharField(max_length=20)
+	stock_data = JSONField(null=True,blank=True)
+	def __unicode__(self):
+		return self.ticker_symbol
