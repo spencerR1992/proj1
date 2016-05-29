@@ -2,6 +2,7 @@ import json
 import random
 from special.models import Company
 import datetime
+from yahoo_finance import Share
 
 
 def unpack_json_data(datafile):
@@ -41,10 +42,19 @@ def get_date(datestring):
 	return datetime.datetime.strptime(myDate,"%Y,%m,%d").date()
 
 #get companies defined by a list of ticker symbols. 
+#returns as a query set
 def get_companies(company_list_json):
 	myArr = []
 	for item in company_json_list:
 		myArr.append(item['Symbol'])
 	return Company.objects.get(ticker_symbol__in=myArr)
+
+def get_company_data(company, start_date, end_date):
+	start_date = "%s,%s,%s" % (start_date.year, start_date.month, start_date.day)
+	end_date = "%s,%s,%s" % (end_date.year, end_date.month, end_date.day)
+	share = Share(company.ticker)
+	return share.get_historical(start_date, end_date)
+
+
 
 
