@@ -1,6 +1,7 @@
 import json
 import random
 from special.models import Company
+import datetime
 
 
 def unpack_json_data(datafile):
@@ -34,3 +35,16 @@ def company_info_to_dict():
                 'IPOyear'], 'sector': item['Sector'], 'industry': item['industry'], 'summary_quote': item['Summary Quote'], 'exchange': item[1]}
 
     return myDict
+
+#takes a string formatted in yahoo finance structure, and returns it as a datetime.date type. 
+def get_date(datestring):
+	return datetime.datetime.strptime(myDate,"%Y,%m,%d").date()
+
+#get companies defined by a list of ticker symbols. 
+def get_companies(company_list_json):
+	myArr = []
+	for item in company_json_list:
+		myArr.append(item['Symbol'])
+	return Company.objects.get(ticker_symbol__in=myArr)
+
+
