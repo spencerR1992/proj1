@@ -74,11 +74,26 @@ WSGI_APPLICATION = 'proj1.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+PGDB_USERNAME = os.environ.get('PGDB_USERNAME')
+PGDB_PASSWORD = os.environ.get('PGDB_PASSWORD')
+PGDB_HOST = os.environ.get('PGDB_HOST', '0.0.0.0')
+PGDB_PORT = os.environ.get('PGDB_PORT', '5432')
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'compose',
+        'USER': PGDB_USERNAME,
+        'PASSWORD': PGDB_PASSWORD,
+        'HOST': PGDB_HOST,
+        'PORT': PGDB_PORT,
+    },
 }
 
 

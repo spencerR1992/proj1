@@ -1,2 +1,3 @@
 *.sh
 computation/environment/
+*.pyc
