@@ -1,0 +1,4 @@
+Django==1.9.6
+jsonfield==1.0.3
+psycopg2==2.6.1
+wsgiref==0.1.2
