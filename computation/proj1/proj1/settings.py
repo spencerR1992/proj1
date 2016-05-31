@@ -72,15 +72,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'proj1.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 PGDB_USERNAME = os.environ.get('PGDB_USERNAME')
 PGDB_PASSWORD = os.environ.get('PGDB_PASSWORD')
 PGDB_HOST = os.environ.get('PGDB_HOST')
@@ -99,6 +90,9 @@ DATABASES = {
 
 ALCHEMY_API_KEY = os.environ.get('ALCHEMY_API_KEY')
 ALCHEMY_API_ENDPOINT = os.environ.get('ALCHEMY_API_ENDPOINT')
+
+AWS_ACCESS_KEY_ID=os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY=os.environ.get('AWS_SECRET_ACCESS_KEY')
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
