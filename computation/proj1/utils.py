@@ -64,8 +64,13 @@ def summStats(new_entry, summ_dict={}):
 	return summ_dict
 
 #takes a company object, and a data frame, and tries a regression. 
-def regress_lasso(df, y):
-	df[y.symbol] = df[y.symbol].shift(-1)
+# def regress_lasso(df, y):
+# 	new = df.copy()
+# 	new[y.symbol] = new[y.symbol].shift(-1)
+# 	new=new[:-1]
+	
+
+
 
 #this takes as its input a QuerySet of companies, and returns a dataframe with those companies, and summary statistics about them. 
 def createDataSet(company_set, days_back,include_summary=True, df = None):
