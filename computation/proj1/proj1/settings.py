@@ -97,7 +97,8 @@ DATABASES = {
     },
 }
 
-
+ALCHEMY_API_KEY = os.environ.get('ALCHEMY_API_KEY')
+ALCHEMY_API_ENDPOINT = os.environ.get('ALCHEMY_API_ENDPOINT')
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
