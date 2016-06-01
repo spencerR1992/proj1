@@ -17,11 +17,13 @@ class Company(models.Model):
 
 class Industry(models.Model):
 	name = models.CharField(max_length=300,unique=True)
+	data = JSONField(null=True,blank=True)
 	def __unicode__(self):
 		return self.name
 
 class Sector(models.Model):
 	name = models.CharField(max_length=500,unique=True)
+	data = JSONField(null=True,blank=True)
 	def __unicode__(self):
 		return self.name
 

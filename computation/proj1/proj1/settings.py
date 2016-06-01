@@ -93,6 +93,7 @@ ALCHEMY_API_ENDPOINT = os.environ.get('ALCHEMY_API_ENDPOINT')
 
 AWS_ACCESS_KEY_ID=os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY=os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_BUCKET_NAME=os.environ.get('AWS_BUCKET_NAME')
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 

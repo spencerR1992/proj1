@@ -1,11 +1,18 @@
 import json
 import random
-from special.models import Company
+from special.models import Company, Industry, Sector
 import datetime
 from yahoo_finance import Share
 import time
 import numpy as np
 import pandas as pd
+
+
+
+def getRandComp():
+    myI = Industry.objects.order_by('?').first()
+    myCs = Company.objects.filter(industry = myI)
+    return myCs
 
 # gets data structured as a json file and unpacks it
 
@@ -37,7 +44,6 @@ def createDataFrame(first_data):
     for item in keys:
         if item != 'date_string':
             del df[item]
-    print 'created frame'
     return df
 
 
@@ -51,12 +57,7 @@ def convertMarketCap(string):
 # total_transaction_vol,
 
 
-def summStats(new_entry, summ_dict={}):
-	try:
-		mc = convertMarketCap(Share(new_entry['Symbol']).get_market_cap())
-	except:
-		mc = 0
-	summ_dict['total_value'] += mc
+def summStats(new_entry, mc, summ_dict={}):
 	summ_dict['total_value_change']+=mc*new_entry['proportion_change']
 	summ_dict['total_value_range'] +=mc*new_entry['proportion_range']
 	summ_dict['total_shares'] += mc/new_entry['average_price']
@@ -68,7 +69,20 @@ def summStats(new_entry, summ_dict={}):
 # 	new = df.copy()
 # 	new[y.symbol] = new[y.symbol].shift(-1)
 # 	new=new[:-1]
-	
+
+def getIndustryData(industry):
+    try:
+        now = datetime.datetime.now()
+        print industry.name
+        myCs = Company.objects.filter(industry=industry)
+        print myCs.count()
+        myData = createDataSet(myCs,365)
+        data = myData.to_json()
+        industry.data = data
+        industry.save()
+        print datetime.datetime.now()-now
+    except Exception, e:
+        print str(e)
 
 
 
@@ -79,16 +93,19 @@ def createDataSet(company_set, days_back,include_summary=True, df = None):
     df = createDataFrame(data)
     summaries = {}
     for item in df.index.tolist():
-    	summaries[item]={'total_value':0.0,'total_value_change':0.0, 'total_value_range':0.0, 'total_shares':0.0, 'total_volume':0.0}
+    	summaries[item]={'total_value_change':0.0, 'total_value_range':0.0, 'total_shares':0.0, 'total_volume':0.0}
+    mc = 0.0
     for company in company_set.all():
-    	print company.name
+        try:
+            mc += convertMarketCap(Share(company.symbol).get_market_cap())
+        except:
+            pass
         data = quickGet(company, days_back)
         df[str(company.symbol)]=0.0
         for day in data:
         	date_string=day['date_string']
         	if include_summary:
-        		date_string = day['date_string']
-        		summaries[date_string] = summStats(day,summaries[date_string])
+        		summaries[date_string] = summStats(day,mc,summaries[date_string])
         	df.set_value(date_string, company.symbol, day['proportion_change'])
     df['ind_pct_ov_ch'] = 0.0
     df['ind_pct_ov_rg'] = 0.0
@@ -96,9 +113,8 @@ def createDataSet(company_set, days_back,include_summary=True, df = None):
     if include_summary:
     	try:
     		for key, value in summaries.iteritems():
-    			tot_val = value['total_value']
-    			df.set_value(key, 'ind_pct_ov_ch', (value['total_value_change']/tot_val))
-    			df.set_value(key, 'ind_pct_ov_rg', (value['total_value_range']/tot_val))
+    			df.set_value(key, 'ind_pct_ov_ch', (value['total_value_change']/mc))
+    			df.set_value(key, 'ind_pct_ov_rg', (value['total_value_range']/mc))
     			df.set_value(key, 'ind_pct_vol', (value['total_volume']/value['total_shares']))
     	except Exception,e:
     		print str(e)
