@@ -9,5 +9,6 @@ deployment:
           s3_location:
             bucket: kings-of-the-unknown
             key_pattern: FlaskStockAnalysis/{SHORT_COMMIT}-{BUILD_NUM}
+        region: us-west-2
         deployment_group: Personal
         deployment_config: CodeDeployDefault.AllAtOnce
