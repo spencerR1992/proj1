@@ -1,5 +1,4 @@
 *.sh
-computation/environment/
 *.pyc
 *.json
 

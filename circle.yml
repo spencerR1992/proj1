@@ -1,0 +1,6 @@
+deployment:
+  staging:
+    branch: master
+    codedeploy:
+      FlaskStockAnalysis:
+        deployment_group: Personal
